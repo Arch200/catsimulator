@@ -1,0 +1,133 @@
+<html>
+
+<head>
+<h1> Cat Simulator Game! </h1>
+<title> Cat Simulator </title>
+
+<style>
+#container {
+    width:500px;
+    height: 500px;
+    position: relative;
+    background:yellow;
+}
+
+#laserpointer {
+    width: 5%;
+    height:10%;
+    position: absolute;
+    background:red;
+    left:30px;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<p id="score">Score: </p>
+<button type="button" onclick="updatescore()">Change Score</button>
+<button type="button" onclick="startupgame()">Start Game</button>
+<button type="button" onclick="changepos()">Click Me!</button>
+<button type="button" onclick="randomnumberalert()">Random Number!</button>
+<div id=container> 
+    <div id=laserpointer> </div>
+</div>
+
+<script> 
+    //crates variable laser and score globally
+    var laser = null;
+    var score=0;
+    //creates a label for winning text
+    var wintext = document.getElementById('winScreen');
+    
+    //initialises everything, sets laser to the red box, 
+    function init() {
+        laser = document.getElementById("laserpointer");
+        
+        laser.style.position='absolute';
+        //starts in top left
+        //laser.style.left='0px';
+        //laser.style.top='0px';
+        //reminds us score = 0 at the start
+        var score = 0;
+        //moves every 1000ms, makes it easier to call the function again and edit
+        movespeed = 1000;
+    }
+
+    function randomnumberalert() {
+        var x = Math.floor(Math.random()*4900);
+        alert(x);
+    }
+    
+    const myFunction = () => {
+       var laser = document.getElementById("laserpointer");
+       var vertrand = Math.floor(Math.random()*490);
+       var horrand = Math.floor(Math.random()*490);
+       //convert to strings
+       vertrand = "" + vertrand;
+       horrand = ""+horrand;
+       laser.style.left= horrand + 'px';
+       laser.style.top=vertrand + 'px';
+       
+    };
+    
+    setInterval(myFunction, movespeed); 
+    
+    function changepos() {
+       var laser = document.getElementById("laserpointer");
+       var vertrand = Math.floor(Math.random()*4900);
+       var horrand = Math.floor(Math.random()*4900);
+       //convert to strings
+       vertrand = "" + vertrand;
+       horrand = ""+horrand;
+       laser.style.left= horrand + 'px';
+       laser.style.top=vertrand + 'px';
+       setInterval(changepos(),2000);
+    }
+    
+    function change(){
+        //changes box colour
+        var laser = document.getElementById("laserpointer");
+        laser.style.background = "blue";
+        //waits for 500ms then changes back into original colour
+        setTimeout(function(){laser.style.background = "red"}, 500);
+      }
+    
+    function repeatPosChange() {
+        setInterval(changepos(),2000);
+    }
+    
+    function startupgame() {
+        var laser = document.getElementById("laserpointer");
+        laser.addEventListener("click",clicklaser); 
+        score=0;
+        scorealert = "score: " + score;
+        var element = document.getElementById("score");
+        element.innerHTML=scorealert;
+        setInterval(myFunction,5000)
+    }
+    
+    
+    function clicklaser() {
+        score++;
+        interval = 1000
+        scorealert = "score: " + score;
+        //alert(scorealert);
+        var element = document.getElementById("score");
+        element.innerHTML=scorealert;
+        setInterval(myFunction, 1000/score); 
+        
+    }
+    
+    function updatescore() {
+        var element = document.getElementById("score");
+        element.innerHTML = "Score Updated!"
+    }
+
+    window.onload=init;
+    </script>
+</body>
+
+</html>
